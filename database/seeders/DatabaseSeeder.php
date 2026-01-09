@@ -17,8 +17,8 @@ $this->call([
     TechnicianSeeder::class,
     WorkOrderSeeder::class,
     TicketSeeder::class,
+    TicketLogSeeder::class,
 ]);
-
 
 
 }
