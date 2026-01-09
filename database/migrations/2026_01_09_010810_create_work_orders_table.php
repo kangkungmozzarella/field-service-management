@@ -12,9 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('work_orders', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+    $table->id();
+    $table->string('work_code')->unique();
+    $table->foreignId('region_id')->constrained()->index();
+    $table->date('work_date')->index();
+    $table->timestamps();
+});
+
     }
 
     /**
