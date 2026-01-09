@@ -18,8 +18,8 @@ $this->call([
     WorkOrderSeeder::class,
     TicketSeeder::class,
     TicketLogSeeder::class,
+    TicketAssignmentSeeder::class,
 ]);
-
 
 }
 
