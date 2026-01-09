@@ -15,7 +15,9 @@ class DatabaseSeeder extends Seeder
     $this->call([
     RegionSeeder::class,
     TechnicianSeeder::class,
+    WorkOrderSeeder::class,
 ]);
+
 
 }
 
