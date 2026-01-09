@@ -4,14 +4,7 @@
 
 This project is a **Field Service Management Dashboard** built with **Laravel 10** and **Livewire** as part of a technical test.
 
-The main goal of this application is to display an aggregated **Work Order Dashboard** that efficiently summarizes:
-
-* Work Orders
-* Regions
-* Tickets & Open Tickets
-* Latest Work Order Status
-* Progress history
-* Assigned Technicians
+The main goal of this application is to display an aggregated **Work Order Dashboard** that efficiently summarizes operational data at scale.
 
 The focus of this test is **backend logic, database design, and query optimization**, not UI styling.
 
@@ -23,13 +16,14 @@ The focus of this test is **backend logic, database design, and query optimizati
 * **Laravel 10**
 * **Livewire** (Page Component)
 * **MySQL**
-* **Vite** (default Laravel setup)
+* **Laravel Debugbar** (Performance analysis)
+* **Vite** (default Laravel setup, not required for core logic)
 
 ---
 
 ## 🗂 Database Design
 
-The database is structured to support scalable reporting:
+The database is structured to support scalable reporting and historical tracking:
 
 * `regions`
 * `technicians`
@@ -39,11 +33,12 @@ The database is structured to support scalable reporting:
 * `ticket_logs`
 * `work_order_progresses`
 
-Key design considerations:
+### Design Considerations
 
 * Proper indexing for reporting queries
-* Separation of progress & log tables for historical tracking
+* Separation of progress & log tables for historical data
 * Aggregation handled at database level (not PHP loops)
+* Designed to scale with large datasets (10,000+ records)
 
 ---
 
@@ -53,14 +48,40 @@ The dashboard data is generated using:
 
 * **Query Object pattern** (`app/Queries/WorkOrderDashboardQuery.php`)
 * SQL aggregations: `COUNT`, `SUM`, `DISTINCT`
-* Subquery to fetch **latest work order status**
-* Pagination for large datasets (tested with 10,000+ records)
+* Subquery to fetch the **latest work order status**
+* Pagination to handle large datasets efficiently
 
-This ensures:
+### Output Columns
 
-* No N+1 query problems
+* Work Code
+* Region
+* Last Status
+* Total Tickets
+* Open Tickets
+* Total Progress Records
+* Total Assigned Technicians
+
+This approach ensures:
+
+* No N+1 query issues
+* Minimal query count
 * High performance on large datasets
 * Clean separation of concerns
+
+---
+
+## 🐞 Debug & Performance
+
+Laravel Debugbar is used to analyze performance on the dashboard page.
+
+Key observations:
+
+* Total queries are kept minimal
+* The heaviest query is the dashboard aggregation query
+* Execution time is acceptable even with large datasets
+* Optimization is achieved through indexed columns and SQL-level aggregation
+
+A screenshot of Debugbar (showing total queries, execution time, and the heaviest query) is provided as part of the technical test submission.
 
 ---
 
@@ -108,26 +129,10 @@ http://127.0.0.1:8000/dashboard
 
 ---
 
-## 🧪 Sample Output
-
-The dashboard displays:
-
-* Work Code
-* Region
-* Last Status
-* Total Tickets
-* Open Tickets
-* Total Progress Records
-* Total Technicians
-
-Pagination is enabled to handle large volumes of data efficiently.
-
----
-
 ## 📝 Notes
 
 * UI is intentionally kept minimal to emphasize backend logic.
-* Asset bundling (Vite) is not required for the core functionality of this test.
+* Asset bundling (Vite) is intentionally not required, as the focus of this test is backend logic and query performance.
 * The project structure is designed to be easily extensible.
 
 ---
@@ -139,6 +144,7 @@ This project demonstrates:
 * Strong understanding of Laravel architecture
 * Efficient SQL and data aggregation
 * Scalable backend design
+* Performance awareness and optimization
 * Clean and maintainable code structure
 
 Thank you for reviewing this technical test.
